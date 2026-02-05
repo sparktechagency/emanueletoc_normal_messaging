@@ -12,6 +12,8 @@ import TermsAndConditions from "../Pages/termsAndConditions/TermsAndConditions";
 import Profile from "../Pages/profile/Profile";
 import ErrorBoundary from "../ErrorBoundary";
 import Users from "../Pages/users/Users";
+import PublicTermsAndConditions from "../Pages/termsAndConditions/PublicTermsAndConditions";
+import PublicPrivacyPolicy from "../Pages/privacyPolicy/PublicPrivacyPolicy";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +61,14 @@ const router = createBrowserRouter([
   {
     path: "/reset-password",
     element: <SetNewPassword />,
+  },
+  {
+    path: "/privacy-policy-public",
+    element: <PublicPrivacyPolicy />,
+  },
+  {
+    path: "/terms-and-condition-public",
+    element: <PublicTermsAndConditions />,
   },
 ]);
 export default router;
