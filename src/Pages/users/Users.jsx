@@ -42,27 +42,27 @@ const Users = () => {
       key: "nick_name",
       render: (text) => <div className="font-poppins">{text}</div>,
     },
-    {
-      title: <div className="font-poppins">User Name</div>,
-      dataIndex: "userName",
-      key: "userName",
-      render: (text, record) => (
-        <div className="flex items-center space-x-3 font-poppins">
-          <img
-            src={`${image_url}/${record.image}`}
-            alt=""
-            className="w-12 h-12 rounded-full object-cover"
-          />
-          <span className="text-gray-900 font-medium">{text}</span>
-        </div>
-      ),
-    },
-    {
-      title: <div className="font-poppins">Email</div>,
-      dataIndex: "email",
-      key: "email",
-      render: (text) => <div className="font-poppins">{text}</div>,
-    },
+    // {
+    //   title: <div className="font-poppins">User Name</div>,
+    //   dataIndex: "userName",
+    //   key: "userName",
+    //   render: (text, record) => (
+    //     <div className="flex items-center space-x-3 font-poppins">
+    //       <img
+    //         src={`${image_url}/${record.image}`}
+    //         alt=""
+    //         className="w-12 h-12 rounded-full object-cover"
+    //       />
+    //       <span className="text-gray-900 font-medium">{text}</span>
+    //     </div>
+    //   ),
+    // },
+    // {
+    //   title: <div className="font-poppins">Email</div>,
+    //   dataIndex: "email",
+    //   key: "email",
+    //   render: (text) => <div className="font-poppins">{text}</div>,
+    // },
 
     {
       title: <div className="font-poppins">License ID</div>,

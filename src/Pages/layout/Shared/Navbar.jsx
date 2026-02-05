@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { MdNotificationsNone } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
-import { Popover } from "antd";
+import { Avatar, Popover } from "antd";
 import { Link } from "react-router-dom";
 import { useGetProfileQuery } from "../../../Redux/profileApis";
+import { image_url } from "../../../Redux/main/server";
 
 const Navbar = () => {
   const { data: profileData, isLoading } = useGetProfileQuery();
@@ -18,7 +19,7 @@ const Navbar = () => {
           to="/profile"
           className="flex items-center gap-2  border-[#6C63FF] border-2 p-2 rounded-md"
         >
-          <FaUserCircle className="text-3xl text-gray-600 font-poppins" />
+          <Avatar size={40} src={`${image_url}/${profileData?.avatar}`} />
           <div className="text-left">
             <p className="text-sm font-semibold"> {profileData?.name}</p>
             <p className="text-xs text-gray-500">{profileData?.email}</p>
