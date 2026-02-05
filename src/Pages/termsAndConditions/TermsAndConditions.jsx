@@ -3,7 +3,10 @@ import JoditEditor from "jodit-react";
 import toast from "react-hot-toast";
 import Back from "../../components/back/Back";
 import { useNavigate } from "react-router-dom";
-import { useCreateTermsAndConditionMutation, useGetTermsAndConditionQuery } from "../../Redux/termsAndConditionsApis";
+import {
+  useCreateTermsAndConditionMutation,
+  useGetTermsAndConditionQuery,
+} from "../../Redux/termsAndConditionsApis";
 
 const TermsAndConditions = () => {
   const navigate = useNavigate();
@@ -22,9 +25,9 @@ const TermsAndConditions = () => {
     useCreateTermsAndConditionMutation();
 
   useEffect(() => {
-    if (termsCondition?.data?.description) {
-      setContent(termsCondition.data.description);
-      setOriginalContent(termsCondition.data.description);
+    if (termsCondition?.content) {
+      setContent(termsCondition.content);
+      setOriginalContent(termsCondition.content);
     }
   }, [termsCondition]);
 
@@ -45,7 +48,8 @@ const TermsAndConditions = () => {
   const handleSave = async () => {
     try {
       await updatePrivacy({
-        description: content,
+        type: "Terms",
+        content: content,
       }).unwrap();
 
       toast.success("Terms and conditions saved successfully!");
@@ -61,7 +65,7 @@ const TermsAndConditions = () => {
     if (hasChanges) {
       if (
         window.confirm(
-          "You have unsaved changes. Are you sure you want to discard them?"
+          "You have unsaved changes. Are you sure you want to discard them?",
         )
       ) {
         setContent(originalContent);

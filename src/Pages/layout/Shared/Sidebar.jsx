@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { MdDashboard, MdLogout, MdOutlineSettings } from "react-icons/md";
 
-import craveCrusherlogo from "../../../../public/crave-crusher-logo.svg";
+import craveCrusherlogo from "../../../../public/logo.svg";
 import { useState } from "react";
 import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 import { FaQuora } from "react-icons/fa";
@@ -23,14 +23,7 @@ const Sidebar = () => {
     },
 
     { name: "Profile Settings", link: "/profile" },
-    // { name: "Log out", link: "/login" },
   ];
-
-  const dashBoard = {
-    name: "Dashboard",
-    link: "/",
-    icon: <MdDashboard />,
-  };
 
   const menuItems = [
     {
@@ -44,26 +37,11 @@ const Sidebar = () => {
   return (
     <div className=" w-[300px] h-[96vh] overflow-y-scroll px-3">
       <div className="flex items-center justify-center flex-col">
-        <img src={craveCrusherlogo} alt="crave-icon" />
-        <div className="text-2xl font-poppins text-[#6C63FF] font-semibold">
-          
-        </div>
+        <img src={craveCrusherlogo} alt="crave-icon" className="w-32" />
+        <div className="text-2xl font-poppins text-[#6C63FF] font-semibold"></div>
       </div>
 
       <ul className="mt-10">
-        {/* Dashboard */}
-        <NavLink
-          to={dashBoard?.link}
-          className={({ isActive }) =>
-            `flex items-center py-3 rounded-3xl my-1 pl-6 hover:!bg-[#6C63FF] cursor-pointer hover:text-white ${
-              isActive ? "!bg-[#6C63FF] text-white" : ""
-            }`
-          }
-        >
-          <span className="mr-4 text-xl">{dashBoard.icon}</span>
-          <span>{dashBoard.name}</span>
-        </NavLink>
-
         {/* Remaining menu items */}
         {menuItems.map((item, index) => (
           <NavLink
@@ -118,7 +96,7 @@ const Sidebar = () => {
             </div>
           )}
 
-          <div className="mt-10">
+          <div className="mt-64">
             <NavLink
               to={"/login"}
               className={({ isActive }) =>

@@ -12,7 +12,7 @@ const authApis = baseApis.injectEndpoints({
 
     forgetPasswordOTP: builder.mutation({
       query: (data) => ({
-        url: "/auth/forget-password",
+        url: "/users/forget-password",
         method: "POST",
         body: data,
       }),
@@ -20,15 +20,7 @@ const authApis = baseApis.injectEndpoints({
 
     verifyEmailOtp: builder.mutation({
       query: (data) => ({
-        url: "/auth/verify-reset-otp",
-        method: "POST",
-        body: data,
-      }),
-    }),
-
-    resendOtp: builder.mutation({
-      query: (data) => ({
-        url: "/auth/resend-reset-code",
+        url: "/users/verify-otp",
         method: "POST",
         body: data,
       }),
@@ -37,8 +29,8 @@ const authApis = baseApis.injectEndpoints({
     changePassword: builder.mutation({
       query: (data) => {
         return {
-          url: "/auth/change-password",
-          method: "POST",
+          url: "/users/change-password",
+          method: "PATCH",
           body: data,
         };
       },
@@ -47,7 +39,7 @@ const authApis = baseApis.injectEndpoints({
     resetPassword: builder.mutation({
       query: (data) => {
         return {
-          url: "/auth/reset-password",
+          url: "/users/reset-password",
           method: "POST",
           body: data,
         };
@@ -60,7 +52,6 @@ const authApis = baseApis.injectEndpoints({
 export const {
   useSignInMutation,
   useForgetPasswordOTPMutation,
-  useResendOtpMutation,
   useVerifyEmailOtpMutation,
   useChangePasswordMutation,
   useResetPasswordMutation,

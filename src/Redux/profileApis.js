@@ -4,14 +4,14 @@ const profileApis = baseApis.injectEndpoints({
   endpoints: (builder) => ({
     getProfile: builder.query({
       query: () => ({
-        url: `/user/get-my-profile`,
+        url: `/auth/me`,
         method: "GET",
       }),
       providesTags: ["Profile"],
     }),
     updateProfile: builder.mutation({
       query: (data) => ({
-        url: `/user/update-profile`,
+        url: `/users`,
         method: "PATCH",
         body: data,
       }),

@@ -29,7 +29,7 @@ const ForgetPassword = () => {
           navigate("/verify-code");
         });
     } catch (error) {
-      toast.error(error?.data?.message);
+      toast.error("Invalid email");
     }
   };
 

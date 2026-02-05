@@ -22,14 +22,14 @@ const Profile = () => {
   console.log(profileData);
 
   useEffect(() => {
-    if (profileData?.data) {
+    if (profileData) {
       form.setFieldsValue({
-        fullName: profileData?.data?.fullName,
-        email: profileData?.data?.email,
+        name: profileData?.name,
+        email: profileData?.email,
       });
 
       setFormData({
-        image: `${image_url}/${profileData?.data?.profileImage}`,
+        image: `${image_url}/${profileData?.avatar}`,
       });
     }
   }, [profileData, form]);
@@ -48,10 +48,10 @@ const Profile = () => {
       const values = await form.validateFields();
 
       const fd = new FormData();
-      fd.append("fullName", values.fullName);
+      fd.append("name", values.name);
 
       if (formData.imageFile) {
-        fd.append("profileImage", formData.imageFile);
+        fd.append("avatar", formData.imageFile);
       }
 
       const response = await updateProfile(fd).unwrap();
@@ -89,7 +89,7 @@ const Profile = () => {
             <Image
               src={
                 formData.imagePreview ||
-                `${image_url}/${profileData?.data?.profileImage}` ||
+                `${image_url}/${profileData?.avatar}` ||
                 profileImage
               }
               alt="Profile"
@@ -117,7 +117,7 @@ const Profile = () => {
             )}
 
             <h2 className="mt-3 text-xl font-semibold font-poppins">
-              {profileData?.data?.fullName}
+              {profileData?.name}
             </h2>
           </div>
 
@@ -156,7 +156,7 @@ const Profile = () => {
                   <div className="flex flex-col gap-1">
                     <Form.Item
                       label={<div className="  font-poppins">User Name</div>}
-                      name="fullName"
+                      name="name"
                       className="font-poppins "
                     >
                       <Input disabled={!isEditing} className="h-[48px]" />
@@ -166,7 +166,7 @@ const Profile = () => {
                       label={<div className="  font-poppins">Email</div>}
                       name="email"
                     >
-                      <Input disabled={!isEditing} className="h-[48px]" />
+                      <Input disabled={true} className="h-[48px]" />
                     </Form.Item>
                   </div>
 

@@ -13,18 +13,17 @@ const SetNewPassword = () => {
       await postResetPassword({
         email: localStorage.getItem("email"),
         password: values.password,
-        confirmPassword: values.confirmPassword,
+        token: localStorage.getItem("otp_verification_token"),
       })
         .unwrap()
         .then((res) => {
           toast.success(res?.message);
           form.resetFields();
           localStorage.clear();
-          localStorage.setItem("token", res?.data?.accessToken);
-          navigate("/");
+          navigate("/login");
         });
     } catch (error) {
-      toast.error(error?.data?.message);
+      toast.error("");
     }
   };
   return (

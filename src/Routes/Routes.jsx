@@ -11,14 +11,11 @@ import PrivacyPolicy from "../Pages/privacyPolicy/PrivacyPolicy";
 import TermsAndConditions from "../Pages/termsAndConditions/TermsAndConditions";
 import Profile from "../Pages/profile/Profile";
 import ErrorBoundary from "../ErrorBoundary";
-import FAQ from "../Pages/faq/FAQ";
 import Users from "../Pages/users/Users";
-import DashboardHome from "../Pages/dashboardHome/DashboardHome";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    errorElement: <ErrorBoundary />,
     element: (
       <AdminRoute>
         <Dashboard />
@@ -27,7 +24,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <DashboardHome />,
+        element: <Users />,
       },
       {
         path: "/privacy-policy",

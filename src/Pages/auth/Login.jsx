@@ -1,7 +1,7 @@
 import { Form, Input, Button, Checkbox } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import craveCrusherlogo from "../../../public/crave-crusher-logo.svg";
+import craveCrusherlogo from "../../../public/logo.svg";
 import { useSignInMutation } from "../../Redux/authApis";
 
 const Login = () => {
@@ -15,18 +15,18 @@ const Login = () => {
     console.log(values);
     try {
       await postSignIn({
-        email: values.email,
+        identifier: values.email,
         password: values.password,
       })
         .unwrap()
         .then((res) => {
-          toast.success(res?.message);
+          toast.success("Login successfully!");
           form.resetFields();
-          localStorage.setItem("token", res?.data?.accessToken);
+          localStorage.setItem("token", res?.token);
           navigate("/");
         });
     } catch (error) {
-      toast.error(error?.data?.message);
+      toast.error("Invalid email or password");
     }
   };
 
@@ -34,10 +34,11 @@ const Login = () => {
     <div className="h-screen flex  items-center justify-center bg-[#F9FAFB] font-poppins">
       <div className=" bg-white flex flex-col justify-center items-center p-12 rounded-xl">
         <div className="flex items-center justify-center flex-col gap-2">
-          <img src={craveCrusherlogo} alt="craveCrusherlogo" />
-          <div className="text-2xl mb-5 text-[#6C63FF] font-semibold">
-            Crave Crusher
-          </div>
+          <img
+            src={craveCrusherlogo}
+            alt="craveCrusherlogo"
+            className="w-32 mb-5"
+          />
         </div>
         <h1 className="text-3xl font-semibold mb-2">Login to Account</h1>
         <p className="text-lg  mb-8 text-center">

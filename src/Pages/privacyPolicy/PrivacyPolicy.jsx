@@ -9,18 +9,6 @@ import {
 } from "../../Redux/privacyPolicyApis";
 
 const PrivacyPolicy = () => {
-  // const editor = useRef(null);
-
-  // const [customerContent, setCustomerContent] = useState("");
-
-  // const handleCustomerClear = () => {
-  //   setCustomerContent("");
-  // };
-
-  // const handleCustomerSave = () => {
-  //   toast.success("Content saved successfully!");
-  // };
-
   const navigate = useNavigate();
   const editor = useRef(null);
 
@@ -35,9 +23,9 @@ const PrivacyPolicy = () => {
   console.log(privacyData);
 
   useEffect(() => {
-    if (privacyData?.data?.description) {
-      setContent(privacyData.data.description);
-      setOriginalContent(privacyData.data.description);
+    if (privacyData?.content) {
+      setContent(privacyData.content);
+      setOriginalContent(privacyData.content);
     }
   }, [privacyData]);
 
@@ -58,7 +46,8 @@ const PrivacyPolicy = () => {
   const handleSave = async () => {
     try {
       await updatePrivacy({
-        description: content,
+        type: "PrivacyPolicy",
+        content: content,
       }).unwrap();
 
       toast.success("Privacy policy saved successfully!");
@@ -74,7 +63,7 @@ const PrivacyPolicy = () => {
     if (hasChanges) {
       if (
         window.confirm(
-          "You have unsaved changes. Are you sure you want to discard them?"
+          "You have unsaved changes. Are you sure you want to discard them?",
         )
       ) {
         setContent(originalContent);

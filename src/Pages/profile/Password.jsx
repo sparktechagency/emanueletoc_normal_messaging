@@ -15,9 +15,9 @@ const Password = () => {
     console.log(values);
     try {
       const response = await changePassword({
-        oldPassword: values.currentPassword,
+        currentPassword: values.currentPassword,
         newPassword: values.newPassword,
-        confirmNewPassword: values.confirmPassword,
+        confirmPassword: values.confirmPassword,
       }).unwrap();
       toast.success(response.message);
       form.resetFields();

@@ -36,12 +36,12 @@ const VerifyCode = () => {
       if (otp[index]) {
         newOtp[index] = "";
         setOtp(newOtp);
-        form.setFieldsValue({ otp: newOtp.join("") }); 
+        form.setFieldsValue({ otp: newOtp.join("") });
       } else if (index > 0) {
         inputRefs.current[index - 1]?.focus();
         newOtp[index - 1] = "";
         setOtp(newOtp);
-        form.setFieldsValue({ otp: newOtp.join("") }); 
+        form.setFieldsValue({ otp: newOtp.join("") });
       }
     }
   };
@@ -82,15 +82,19 @@ const VerifyCode = () => {
     try {
       await postVerifyAccount({
         email: email,
-        resetCode: parseInt(otp.join(""), 10),
+        otp: otp.join(""),
       })
         .unwrap()
         .then((res) => {
           toast.success(res?.message);
+          localStorage.setItem(
+            "otp_verification_token",
+            res?.otp_verification_token,
+          );
           navigate("/reset-password");
         });
     } catch (error) {
-      toast.error(error?.data?.message);
+      toast.error("Invalid OTP");
     }
   };
 
