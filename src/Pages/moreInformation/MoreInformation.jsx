@@ -53,12 +53,12 @@ const MoreInformation = () => {
         content: content,
       }).unwrap();
 
-      toast.success("Terms and conditions saved successfully!");
+      toast.success("More information saved successfully!");
       setOriginalContent(content);
       setHasChanges(false);
     } catch (error) {
-      console.error("Failed to save terms and conditions:", error);
-      toast.error("Failed to save terms and conditions. Please try again.");
+      console.error("Failed to save more information:", error);
+      toast.error("Failed to save more information. Please try again.");
     }
   };
 
@@ -84,19 +84,19 @@ const MoreInformation = () => {
     return (
       <div className="flex justify-center items-center h-64">
         <div className="text-red-500">
-          Failed to load terms and conditions. Please try again later.
+          Failed to load More Information. Please try again later.
         </div>
       </div>
     );
   }
   return (
     <div className="bg-[#F9FAFB] px-10 py-10">
-      <Back name="Terms And Conditions" />
+      <Back name="More Information" />
       <div className="mb-10  h-screen">
         <div className="flex items-center space-x-2 "></div>
 
         <div className="w-full px-6 py-8 bg-white rounded-lg mt-6">
-          <h1 className="text-2xl font-semibold mb-5"> Terms And Conditions</h1>
+          <h1 className="text-2xl font-semibold mb-5">More Information</h1>
           <div className="flex flex-col w-full">
             <JoditEditor
               ref={editor}
@@ -106,7 +106,7 @@ const MoreInformation = () => {
                 buttons:
                   "bold,italic,underline,|,ul,ol,|,h1,h2,paragraph,|,align,|,image,link,|,source",
                 height: 500,
-                placeholder: "Enter your terms and conditions content here...",
+                placeholder: "Enter your more information content here...",
                 toolbarAdaptive: false,
               }}
               className="border rounded-md"

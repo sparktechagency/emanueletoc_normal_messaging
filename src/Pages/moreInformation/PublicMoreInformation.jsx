@@ -24,8 +24,8 @@ const PublicMoreInformation = () => {
   }
 
   return (
-    <div className="px-10 py-10 bg-[#F9FAFB]">
-      <div className="w-full px-6 py-8 bg-white rounded-lg">
+    <div className="px-10 py-10 ">
+       <div className="w-full px-6 py-8 bg-white rounded-lg">
         <h1 className="text-2xl font-semibold mb-5 text-center">
           More Information
         </h1>

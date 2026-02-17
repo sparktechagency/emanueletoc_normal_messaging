@@ -1,11 +1,20 @@
 import { useState } from "react";
-import { Table, Button, Modal, Image, Dropdown, Space, Input } from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import {
+  Table,
+  Button,
+  Modal,
+  Image,
+  Popconfirm,
+  Tooltip,
+  message,
+} from "antd";
 import { FaUserCircle } from "react-icons/fa";
-import { MdBlock } from "react-icons/md";
-import { IoIosWarning } from "react-icons/io";
+import { MdBlock, MdOutlineCheckCircle } from "react-icons/md";
 import Back from "../../components/back/Back";
-import { useGetAllUsersQuery } from "../../Redux/usersApis";
+import {
+  useBlockUnblockUserMutation,
+  useGetAllUsersQuery,
+} from "../../Redux/usersApis";
 import { image_url } from "../../Redux/main/server";
 
 const Users = () => {
@@ -19,8 +28,8 @@ const Users = () => {
   };
 
   const { data: usersData, isLoading } = useGetAllUsersQuery(queryParams);
-
-  console.log(usersData);
+  const [blockUnblockUser, { isLoading: isBlocking }] =
+    useBlockUnblockUserMutation();
 
   const users =
     usersData?.users.map((item) => ({
@@ -32,8 +41,25 @@ const Users = () => {
       email: item.email || "N/A",
       joined: new Date(item.createdAt).toLocaleDateString(),
       designation: item.designation || "N/A",
+      isBlocked: item.is_blocked || false,
       userData: item,
     })) || [];
+
+  const handleBlockUnblock = async (userId, isBlocked) => {
+    try {
+      await blockUnblockUser({ userId }).unwrap();
+      message.success(
+        `User ${isBlocked ? "unblocked" : "blocked"} successfully`,
+      );
+
+      // Update selectedUser state if modal is open for this user
+      if (selectedUser?.key === userId) {
+        setSelectedUser((prev) => ({ ...prev, isBlocked: !isBlocked }));
+      }
+    } catch (error) {
+      message.error(`Failed to ${isBlocked ? "unblock" : "block"} user`);
+    }
+  };
 
   const columns = [
     {
@@ -42,28 +68,6 @@ const Users = () => {
       key: "nick_name",
       render: (text) => <div className="font-poppins">{text}</div>,
     },
-    // {
-    //   title: <div className="font-poppins">User Name</div>,
-    //   dataIndex: "userName",
-    //   key: "userName",
-    //   render: (text, record) => (
-    //     <div className="flex items-center space-x-3 font-poppins">
-    //       <img
-    //         src={`${image_url}/${record.image}`}
-    //         alt=""
-    //         className="w-12 h-12 rounded-full object-cover"
-    //       />
-    //       <span className="text-gray-900 font-medium">{text}</span>
-    //     </div>
-    //   ),
-    // },
-    // {
-    //   title: <div className="font-poppins">Email</div>,
-    //   dataIndex: "email",
-    //   key: "email",
-    //   render: (text) => <div className="font-poppins">{text}</div>,
-    // },
-
     {
       title: <div className="font-poppins">License ID</div>,
       dataIndex: "licence_id",
@@ -82,18 +86,72 @@ const Users = () => {
       key: "designation",
       render: (text) => <div className="font-poppins">{text}</div>,
     },
-
+    {
+      title: <div className="font-poppins">Status</div>,
+      dataIndex: "isBlocked",
+      key: "isBlocked",
+      render: (isBlocked) => (
+        <span
+          className={`font-poppins text-xs font-semibold px-2 py-1 rounded-full ${
+            isBlocked
+              ? "bg-red-100 text-red-600"
+              : "bg-green-100 text-green-600"
+          }`}
+        >
+          {isBlocked ? "Blocked" : "Active"}
+        </span>
+      ),
+    },
     {
       title: <div className="font-poppins">Action</div>,
       key: "action",
       render: (_, record) => (
         <div className="flex space-x-2 font-poppins">
-          <Button
-            type="primary"
-            icon={<FaUserCircle />}
-            className="bg-[#6C63FF] hover:!bg-[#5d55f5] text-white font-poppins"
-            onClick={() => handleViewProfile(record)}
-          />
+          {/* View Profile */}
+          <Tooltip title="View Profile">
+            <Button
+              type="primary"
+              icon={<FaUserCircle />}
+              className="bg-[#6C63FF] hover:!bg-[#5d55f5] text-white font-poppins"
+              onClick={() => handleViewProfile(record)}
+            />
+          </Tooltip>
+
+          {/* Block / Unblock */}
+          <Popconfirm
+            title={record.isBlocked ? "Unblock this user?" : "Block this user?"}
+            description={
+              record.isBlocked
+                ? "This user will regain access to the platform."
+                : "This user will lose access to the platform."
+            }
+            onConfirm={() => handleBlockUnblock(record.key, record.isBlocked)}
+            okText="Yes"
+            cancelText="No"
+            okButtonProps={{
+              className: record.isBlocked
+                ? "bg-green-500 hover:!bg-green-600"
+                : "bg-red-500 hover:!bg-red-600",
+            }}
+          >
+            <Tooltip title={record.isBlocked ? "Unblock User" : "Block User"}>
+              <Button
+                icon={
+                  record.isBlocked ? (
+                    <MdOutlineCheckCircle className="text-green-600" />
+                  ) : (
+                    <MdBlock className="text-red-500" />
+                  )
+                }
+                className={`font-poppins border ${
+                  record.isBlocked
+                    ? "border-green-400 hover:!border-green-500"
+                    : "border-red-400 hover:!border-red-500"
+                }`}
+                loading={isBlocking}
+              />
+            </Tooltip>
+          </Popconfirm>
         </div>
       ),
     },
@@ -150,12 +208,27 @@ const Users = () => {
                   height={120}
                   preview={false}
                 />
-                <span className="absolute bottom-2 right-2 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></span>
+                <span
+                  className={`absolute bottom-2 right-2 w-4 h-4 border-2 border-white rounded-full ${
+                    selectedUser.isBlocked ? "bg-red-500" : "bg-green-500"
+                  }`}
+                />
               </div>
 
-              <p>
+              <p className="mt-2 text-lg font-semibold">
                 {selectedUser.nick_name}
               </p>
+
+              {/* Status Badge */}
+              <span
+                className={`text-xs font-semibold px-3 py-1 rounded-full mt-1 ${
+                  selectedUser.isBlocked
+                    ? "bg-red-100 text-red-600"
+                    : "bg-green-100 text-green-600"
+                }`}
+              >
+                {selectedUser.isBlocked ? "Blocked" : "Active"}
+              </span>
 
               {/* Divider */}
               <div className="w-full border-t my-4"></div>
@@ -179,6 +252,51 @@ const Users = () => {
                   {selectedUser.joined}
                 </p>
               </div>
+
+              {/* Divider */}
+              <div className="w-full border-t my-4"></div>
+
+              {/* Block/Unblock Button inside Modal */}
+              <Popconfirm
+                title={
+                  selectedUser.isBlocked
+                    ? "Unblock this user?"
+                    : "Block this user?"
+                }
+                description={
+                  selectedUser.isBlocked
+                    ? "This user will regain access to the platform."
+                    : "This user will lose access to the platform."
+                }
+                onConfirm={() =>
+                  handleBlockUnblock(selectedUser.key, selectedUser.isBlocked)
+                }
+                okText="Yes"
+                cancelText="No"
+                okButtonProps={{
+                  className: selectedUser.isBlocked
+                    ? "bg-green-500 hover:!bg-green-600"
+                    : "bg-red-500 hover:!bg-red-600",
+                }}
+              >
+                <Button
+                  icon={
+                    selectedUser.isBlocked ? (
+                      <MdOutlineCheckCircle />
+                    ) : (
+                      <MdBlock />
+                    )
+                  }
+                  className={`w-full font-poppins font-semibold ${
+                    selectedUser.isBlocked
+                      ? "bg-green-50 text-green-600 border-green-400 hover:!bg-green-100 hover:!border-green-500"
+                      : "bg-red-50 text-red-600 border-red-400 hover:!bg-red-100 hover:!border-red-500"
+                  }`}
+                  loading={isBlocking}
+                >
+                  {selectedUser.isBlocked ? "Unblock User" : "Block User"}
+                </Button>
+              </Popconfirm>
             </div>
           </Modal>
         )}
