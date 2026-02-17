@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useGetPrivacyPolicyQuery } from "../../Redux/privacyPolicyApis";
+import { useGetMoreInformationQuery } from "../../Redux/moreInformationApis";
 
-const PublicPrivacyPolicy = () => {
-  const { data, isLoading, isError } = useGetPrivacyPolicyQuery();
+const PublicMoreInformation = () => {
+  const { data, isLoading, isError } = useGetMoreInformationQuery();
   const [content, setContent] = useState("");
 
   useEffect(() => {
@@ -18,16 +18,16 @@ const PublicPrivacyPolicy = () => {
   if (isError) {
     return (
       <div className="flex justify-center items-center h-64 text-red-500">
-        Failed to load privacy policy.
+        Failed to load more information.
       </div>
     );
   }
 
   return (
-    <div className=" px-10 py-10">
+    <div className="px-10 py-10 bg-[#F9FAFB]">
       <div className="w-full px-6 py-8 bg-white rounded-lg">
         <h1 className="text-2xl font-semibold mb-5 text-center">
-          Privacy Policy
+          More Information
         </h1>
 
         <div
@@ -39,4 +39,4 @@ const PublicPrivacyPolicy = () => {
   );
 };
 
-export default PublicPrivacyPolicy;
+export default PublicMoreInformation;

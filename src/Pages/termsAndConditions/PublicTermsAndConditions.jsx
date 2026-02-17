@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Back from "../../components/back/Back";
 import { useGetTermsAndConditionQuery } from "../../Redux/termsAndConditionsApis";
 
 const PublicTermsAndConditions = () => {

@@ -10,10 +10,11 @@ import Dashboard from "../Pages/layout/Dashboard";
 import PrivacyPolicy from "../Pages/privacyPolicy/PrivacyPolicy";
 import TermsAndConditions from "../Pages/termsAndConditions/TermsAndConditions";
 import Profile from "../Pages/profile/Profile";
-import ErrorBoundary from "../ErrorBoundary";
 import Users from "../Pages/users/Users";
 import PublicTermsAndConditions from "../Pages/termsAndConditions/PublicTermsAndConditions";
 import PublicPrivacyPolicy from "../Pages/privacyPolicy/PublicPrivacyPolicy";
+import PublicMoreInformation from "../Pages/moreInformation/PublicMoreInformation";
+import MoreInformation from "../Pages/moreInformation/MoreInformation";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/terms-and-condition",
         element: <TermsAndConditions />,
+      },
+      {
+        path: "/more-information",
+        element: <MoreInformation />,
       },
       {
         path: "/profile",
@@ -69,6 +74,10 @@ const router = createBrowserRouter([
   {
     path: "/terms-and-condition-public",
     element: <PublicTermsAndConditions />,
+  },
+  {
+    path: "/get-more-information",
+    element: <PublicMoreInformation />,
   },
 ]);
 export default router;
