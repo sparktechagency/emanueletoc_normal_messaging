@@ -37,10 +37,10 @@ const router = createBrowserRouter([
         path: "/terms-and-condition",
         element: <TermsAndConditions />,
       },
-      {
-        path: "/more-information",
-        element: <MoreInformation />,
-      },
+      // {
+      //   path: "/more-information",
+      //   element: <MoreInformation />,
+      // },
       {
         path: "/profile",
         element: <Profile />,
@@ -75,9 +75,9 @@ const router = createBrowserRouter([
     path: "/terms-and-condition-public",
     element: <PublicTermsAndConditions />,
   },
-  {
-    path: "/get-more-information",
-    element: <PublicMoreInformation />,
-  },
+  // {
+  //   path: "/get-more-information",
+  //   element: <PublicMoreInformation />,
+  // },
 ]);
 export default router;

@@ -21,10 +21,10 @@ const Sidebar = () => {
       name: "Terms & condition",
       link: "/terms-and-condition",
     },
-    {
-      name: "More Information",
-      link: "/more-information",
-    },
+    // {
+    //   name: "More Information",
+    //   link: "/more-information",
+    // },
 
     { name: "Profile Settings", link: "/profile" },
   ];
