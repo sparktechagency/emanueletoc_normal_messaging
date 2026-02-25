@@ -1,10 +1,9 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { MdDashboard, MdLogout, MdOutlineSettings } from "react-icons/md";
+import { MdLogout, MdOutlineSettings } from "react-icons/md";
 
 import craveCrusherlogo from "../../../../public/logo.svg";
 import { useState } from "react";
 import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
-import { FaQuora } from "react-icons/fa";
 import { CiUser } from "react-icons/ci";
 
 const Sidebar = () => {
